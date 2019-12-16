@@ -140,3 +140,46 @@ func DeleteVideoInfo(vid string) error {
 	defer stmtDel.Close()
 	return nil
 }
+
+//添加评论
+func AddNewComments(vid string, aid int, content string) error {
+	id, err := util.NewUUID()
+	if err != nil {
+		return err
+	}
+	stmt, err := dbConn.Prepare(`INSERT INTO comments (id, video_id, author_id, content)
+			values (?,?,?,?)`)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(id, vid, aid, content)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	return nil
+}
+
+//查询评论
+func ListComments(vid string, from, to int) ([]*defs.Comment, error) {
+	stmt, err := dbConn.Prepare(`SELECT comments.id, users.Login_name, comments.content FROM comments
+		INNER JOIN users ON comments.author_id = users.id
+		WHERE comments.video_id = ? AND comments.time > FROM_UNIXTIME(?) AND comments.time <= FROM_UNIXTIME(?)
+		ORDER BY comments.time DESC`)
+	//定义返回切片
+	var res []*defs.Comment
+	rows, err := stmt.Query(vid, from, to)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var id, name, content string
+		if err = rows.Scan(&id, &name, &content); err != nil {
+			return res, err
+		}
+		comment := &defs.Comment{Id: id, VideoId: vid, Author: name, Content: content}
+		res = append(res, comment)
+	}
+	defer stmt.Close()
+	return res, nil
+}
