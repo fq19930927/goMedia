@@ -28,14 +28,14 @@ func TestUserWorkFlow(t *testing.T) {
 }
 
 func testAddUser(t *testing.T) {
-	err := AddUserCredential("fuqiang", "123")
+	err := AddUserCredential("star", "123")
 	if err != nil {
 		t.Logf("add user error is %v", err)
 	}
 }
 
 func testGetUser(t *testing.T) {
-	pwd, err := GetUserCredential("fuqiang")
+	pwd, err := GetUserCredential("star")
 	if err != nil {
 		t.Logf("get user error is %v", err)
 	}
@@ -43,7 +43,7 @@ func testGetUser(t *testing.T) {
 }
 
 func testDeleteUser(t *testing.T) {
-	err := DeleteUser("fuqiang", "123")
+	err := DeleteUser("star", "123")
 	if err != nil {
 		t.Logf("delete user error is %v", err)
 	}
