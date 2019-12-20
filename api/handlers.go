@@ -1,11 +1,11 @@
 package main
 
 import (
-	"./dbops"
-	"./defs"
-	"./session"
 	"encoding/json"
 	"github.com/julienschmidt/httprouter"
+	"goMidia/api/dbops"
+	"goMidia/api/defs"
+	"goMidia/api/session"
 	"io"
 	"io/ioutil"
 	"net/http"

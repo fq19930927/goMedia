@@ -1,10 +1,10 @@
 package dbops
 
 import (
-	"../defs"
-	"../util"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"goMidia/api/defs"
+	"goMidia/api/util"
 	"log"
 	"time"
 )
